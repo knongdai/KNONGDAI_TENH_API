@@ -34,6 +34,7 @@ public class Product {
 	public void setImg(String img) {
 		this.img = img;
 	}
+	
 	@JsonIgnore
 	private String images;
 	
@@ -92,20 +93,16 @@ public class Product {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	public ArrayList<String> getLstImg() {
-		this.setLstImg(this.images);
-		return lstImg;
-	}
 	
-	public void setLstImg(String images) {
-		System.out.println("images: " + images);
-		String[] slitedImg = images.split(" ");
-		ArrayList<String> listImg = new ArrayList<>();
-		for(int i = 0; i < slitedImg.length; i++){
-			listImg.add(slitedImg[i]);
+	public ArrayList<String> getLstImg() {
+		lstImg = new ArrayList<>();
+		if(this.images!=null){
+			String[] str = this.images.split(" ");
+			for(String s: str){
+				this.lstImg.add(s);
+			}
 		}
-		System.out.println("lstImg" + lstImg);
-		this.lstImg = listImg;
+		return lstImg;
 	}
 	
 	public String getUrl() {
@@ -145,5 +142,13 @@ public class Product {
 	}
 	public void setImages(String images) {
 		this.images = images;
+	}
+	@Override
+	public String toString() {
+		return "Product [productid=" + productid + ", productType=" + productType + ", title=" + title + ", price="
+				+ price + ", lstImg=" + lstImg + ", image=" + image + ", img=" + img + ", images=" + images + ", url="
+				+ url + ", description=" + description + ", datecreate=" + datecreate + ", userId=" + userId
+				+ ", subtwoCategory=" + subtwoCategory + ", sourceCategory=" + sourceCategory + "]";
 	}	
+	
 }

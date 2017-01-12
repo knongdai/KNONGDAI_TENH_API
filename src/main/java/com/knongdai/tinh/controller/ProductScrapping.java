@@ -32,7 +32,7 @@ public class ProductScrapping {
 	/**
 	 * Scrap data auto by set fixed delay
 	 */
-	@Scheduled(fixedDelay = 30*60000)
+	//@Scheduled(fixedDelay = 30*60000)
 	private void scrap(){
 		System.out.println("Autoscrap...");
 		

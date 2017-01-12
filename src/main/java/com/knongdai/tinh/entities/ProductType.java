@@ -50,4 +50,10 @@ public class ProductType {
 		this.tags = tags;
 	}
 
+	@Override
+	public String toString() {
+		return "ProductType [productid=" + productid + ", subTwoCategory=" + subTwoCategory + ", productType="
+				+ productType + ", tags=" + tags + "]";
+	}
+
 }

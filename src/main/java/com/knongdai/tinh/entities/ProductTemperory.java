@@ -7,6 +7,16 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class ProductTemperory {
 	
+	@JsonProperty("PRODUCT_TYPE_ID")
+	private ProductType productType;
+	
+	public ProductType getProductType() {
+		return productType;
+	}
+	public void setProductType(ProductType productType) {
+		this.productType = productType;
+	}
+	
 	@JsonProperty("ID")
 	private long productid;
 

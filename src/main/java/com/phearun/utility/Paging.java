@@ -1,40 +1,29 @@
-package com.knongdai.tinh.entities.util;
-
-import java.io.Serializable;
+package com.phearun.utility;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class Pagination implements Serializable{
-private static final long serialVersionUID = 1L;
+public class Paging {
 	
-	@JsonProperty("PAGE")
 	private int page;
-
-	@JsonProperty("LIMIT")
 	private int limit;
-
-	@JsonProperty("TOTAL_COUNT")
 	private Long totalCount;
-
-	@JsonProperty("TOTAL_PAGES")
 	private Long totalPages;
 
 	@JsonIgnore
 	private int offset;
 
-	public Pagination() {
+	public Paging() {
 		this(1, 10, 0L, 0L);
 	}
 
-	public Pagination(int page, int limit) {
+	public Paging(int page, int limit) {
 		this.page = page;
 		this.limit = limit;
 		this.totalCount = 0L;
 		this.totalPages = 0L;
 	}
 
-	public Pagination(int page, int limit, Long totalCount, Long totalPages) {
+	public Paging(int page, int limit, Long totalCount, Long totalPages) {
 		this.page = page;
 		this.limit = limit;
 		this.totalCount = totalCount;
