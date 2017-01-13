@@ -21,15 +21,24 @@ import pagination.util.UserFilter;*/
 @Repository
 public interface ProductReposity {
 	
-	String compare_price = "SELECT pt.product_type, p.price, p.url, s.domain, s.logo " 
-							+"FROM phsar_product p " 
-							+"INNER JOIN phsar_product_type pt "
-							+"ON p.product_type_fk_id = pt.product_type_pk_id "
-							+"INNER JOIN phsar_source_category sc "
-							+"ON p.source_category_fk_id = sc.source_category_pk_id "
-							+"INNER JOIN phsar_source s "
-							+"ON sc.source_fk_id = s.source_pk_id "
-							+"WHERE p.product_type_fk_id = #{productType.productid}";
+	String compare_price = "SELECT "
+							+ "		pt.product_type, "
+							+ "		p.price, "
+							+ "		p.url, "
+							+ "		s.domain, "
+							+ "		s.logo " 
+							+ "	FROM "
+							+ "		phsar_product p " 
+							+"	INNER JOIN "
+							+ "		phsar_product_type pt ON p.product_type_fk_id = pt.product_type_pk_id "
+							+"	INNER JOIN "
+							+ "		phsar_source_category sc ON p.source_category_fk_id = sc.source_category_pk_id "
+							+"	INNER JOIN "
+							+ "		phsar_source s ON sc.source_fk_id = s.source_pk_id "
+							+"	WHERE "
+							+ "		p.product_type_fk_id = #{productType.productid}"
+							+ "	AND"
+							+ "		p.publish = true";
 	
 	String add_products = "<script>"
 								+ "INSERT INTO phsar_product("

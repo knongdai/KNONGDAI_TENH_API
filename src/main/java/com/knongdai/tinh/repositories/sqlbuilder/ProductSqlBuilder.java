@@ -76,40 +76,39 @@ public class ProductSqlBuilder {
 						}
 						
 		if(category > 0 && !title.equals("null")){
-			buffer.append("WHERE m.category_pk_id = "
-						+ category 
+			buffer.append(" WHERE publish=true AND m.category_pk_id = " + category 
 						+" AND "
 						+ " LOWER(p.title) LIKE LOWER('%"+ title +"%') "
 						+" ORDER BY p.product_pk_id DESC "
 						+"	LIMIT "
-						+"		#{pagin.limit} "
-									
+						+"		#{pagin.limit} "			
 						+"	OFFSET "
 						+"		#{pagin.offset}");
-			return buffer.toString();
+			//return buffer.toString();
 		}
 		else if(category <= 0 && !title.equals("null"))
 		{
-			buffer.append("WHERE LOWER(p.title) LIKE LOWER('%"+ title +"%')"
+			buffer.append(" WHERE publish=true AND LOWER(p.title) LIKE LOWER('%"+ title +"%')"
 							+" ORDER BY p.product_pk_id DESC "
 							+"	LIMIT "
 							+"		#{pagin.limit} "
 										
 							+"	OFFSET "
 							+"		#{pagin.offset}");
-			return buffer.toString();
+			//return buffer.toString();
 		}
 		else if(category > 0 && title.equals("null"))
 		{
-			buffer.append("WHERE m.category_pk_id = "
-						+ category
+			buffer.append(" WHERE publish=true AND m.category_pk_id = " + category
 						+" ORDER BY p.product_pk_id DESC "
 						+"	LIMIT "
 						+"		#{pagin.limit} "
 									
 						+"	OFFSET "
 						+"		#{pagin.offset}");
-			return buffer.toString();
+			//return buffer.toString();
+		}else{
+			buffer.append(" WHERE publish=true ");
 		}
 		return buffer.toString();
 	}
@@ -142,7 +141,7 @@ public class ProductSqlBuilder {
 
 		buffer.append(select);
 		if(category > 0 && !title.equals("null")){
-			buffer.append("WHERE m.category_pk_id = "
+			buffer.append("WHERE publish=true AND m.category_pk_id = "
 						+ category 
 						+" AND "
 						+ " LOWER(p.title) LIKE LOWER('%"+ title +"%') ");
@@ -150,14 +149,15 @@ public class ProductSqlBuilder {
 		}
 		else if(category <= 0 && !title.equals("null"))
 		{
-			buffer.append("WHERE LOWER(p.title) LIKE LOWER('%"+ title +"%')");
+			buffer.append("WHERE publish=true AND LOWER(p.title) LIKE LOWER('%"+ title +"%')");
 			return buffer.toString();
 		}
 		else if(category > 0 && title.equals("null"))
 		{
-			buffer.append("WHERE m.category_pk_id = "
-						+ category);
+			buffer.append("WHERE publish=true AND m.category_pk_id = " + category);
 			return buffer.toString();
+		}else{
+			buffer.append("WHERE publish=true");
 		}
 		
 		return buffer.toString();
@@ -208,13 +208,10 @@ public class ProductSqlBuilder {
 				strBuilder.append("LEFT JOIN phsar_farvorite F ON p.product_pk_id = F.product_fk_id AND F.user_fk_id =#{userId} ");
 			}
 			
-			strBuilder.append(" ORDER BY p.product_pk_id DESC "
-				
-			+"	LIMIT "
-			+"		#{pagin.limit} "
-						
-			+"	OFFSET "
-			+"		#{pagin.offset}");
+			strBuilder.append(" WHERE publish=true ");
+			
+			strBuilder.append(" ORDER BY p.product_pk_id DESC LIMIT #{pagin.limit} OFFSET #{pagin.offset}");
+			
 		return strBuilder.toString();
 	}
 	
@@ -225,7 +222,6 @@ public class ProductSqlBuilder {
 	 */
 	public static String countALLProducts(){
 		String select = "SELECT "
-				
 							+ "COUNT(*) "
 						+ "FROM "
 							+ "phsar_product p "
@@ -236,8 +232,8 @@ public class ProductSqlBuilder {
 						+ "INNER JOIN "
 							+ "phsar_source_category sc "
 						+ "ON "
-							+ "p.source_category_fk_id = sc.source_category_pk_id ";
-						
+							+ "p.source_category_fk_id = sc.source_category_pk_id "
+						+ " WHERE publish=true ";
 		return select;
 	}
 	
@@ -291,7 +287,7 @@ public class ProductSqlBuilder {
 						if(userId > 0){
 							buffer.append("LEFT JOIN phsar_farvorite F ON p.product_pk_id = F.product_fk_id AND F.user_fk_id =#{userId} ");
 						}
-						buffer.append(" WHERE "
+						buffer.append(" WHERE publish=true AND"
 						+"		s2.sub_two_pk_id = "+id
 						+" ORDER BY p.product_pk_id DESC "
 						
@@ -328,7 +324,9 @@ public class ProductSqlBuilder {
 						+" ON "
 						+"		sc.source_fk_id = s.source_pk_id "
 						+" WHERE "
-						+"		s2.sub_two_pk_id = #{subtwoCategory.subtwocategoryid} ";	
+						+ "			publish=true "
+						+ "		AND"
+						+"			s2.sub_two_pk_id = #{subtwoCategory.subtwocategoryid} ";	
 		return select;
 	}
 	
@@ -390,7 +388,7 @@ public class ProductSqlBuilder {
 		
 		if(mainid > 0 && title.equals("null") && price <= 0 && start_price <= 0 && sourceid <= 0 && subid >= 0)
 		{
-			buffer.append("WHERE m.category_pk_id = "
+			buffer.append("WHERE publish=true AND m.category_pk_id = "
 					+ mainid
 					+" ORDER BY p.product_pk_id DESC "
 					+"	LIMIT "
@@ -401,7 +399,7 @@ public class ProductSqlBuilder {
 		}
 		else if(!title.equals("null") && mainid <= 0 && price <= 0 && start_price <= 0 && sourceid <= 0 && subid >= 0)
 		{
-			buffer.append("WHERE LOWER(p.title) LIKE LOWER('%"+ title +"%')"
+			buffer.append("WHERE publish=true AND LOWER(p.title) LIKE LOWER('%"+ title +"%')"
 					+" ORDER BY p.product_pk_id DESC "
 					+"	LIMIT "
 					+"		#{pagin.limit} "
@@ -412,7 +410,7 @@ public class ProductSqlBuilder {
 		}
 		else if(!title.equals("null") && mainid > 0 && price <= 0 && start_price <= 0 && sourceid <= 0 && subid >= 0)
 		{
-			buffer.append("WHERE m.category_pk_id = "
+			buffer.append("WHERE publish=true AND m.category_pk_id = "
 					+ mainid
 					+" AND "
 					+ " LOWER(p.title) LIKE LOWER('%"+ title +"%') "
@@ -429,7 +427,7 @@ public class ProductSqlBuilder {
 		//**
 		else if(!title.equals("null") && sourceid > 0 && price <= 0 && start_price <= 0 &&  mainid <= 0 && subid >= 0)
 		{
-			buffer.append("WHERE s.source_pk_id = "
+			buffer.append("WHERE publish=true AND s.source_pk_id = "
 					+ sourceid
 					+" AND "
 					+ " LOWER(p.title) LIKE LOWER('%"+ title +"%') "
@@ -444,7 +442,7 @@ public class ProductSqlBuilder {
 		
 		else if(!title.equals("null") && price > 0 && start_price >= 0 && mainid <= 0 && sourceid <= 0 && subid >= 0)
 		{
-			buffer.append("WHERE "
+			buffer.append("WHERE publish=true AND "
 					+" LOWER(p.title) LIKE LOWER('%"+ title +"%') "
 					+" AND "
 					+" p.price BETWEEN "+ start_price +" "
@@ -460,7 +458,7 @@ public class ProductSqlBuilder {
 		
 		else if(!title.equals("null") && sourceid > 0 && mainid > 0 && price <= 0 && start_price <= 0 && subid >= 0)
 		{
-			buffer.append("WHERE m.category_pk_id = "+ mainid
+			buffer.append("WHERE publish=true AND m.category_pk_id = "+ mainid
 					+ " AND "
 					+ " s.source_pk_id = "+ sourceid
 					+" AND "
@@ -476,7 +474,7 @@ public class ProductSqlBuilder {
 		
 		else if(!title.equals("null") && price > 0 && start_price >= 0 && mainid > 0 && sourceid <= 0 && subid >= 0)
 		{
-			buffer.append("WHERE m.category_pk_id = "+ mainid
+			buffer.append("WHERE publish=true AND m.category_pk_id = "+ mainid
 					+" AND "
 					+" LOWER(p.title) LIKE LOWER('%"+ title +"%') "
 					+" AND "
@@ -493,7 +491,7 @@ public class ProductSqlBuilder {
 		
 		else if(!title.equals("null") && price > 0 && start_price >= 0 && sourceid > 0 && mainid <= 0 && subid >= 0)
 		{
-			buffer.append("WHERE s.source_pk_id = "+ sourceid
+			buffer.append("WHERE publish=true AND s.source_pk_id = "+ sourceid
 					+" AND "
 					+" LOWER(p.title) LIKE LOWER('%"+ title +"%') "
 					+" AND "
@@ -511,7 +509,7 @@ public class ProductSqlBuilder {
 		
 		else if(subid > 0 && start_price > 0 && price <= 0 && sourceid <= 0 && title.equals("null") && mainid <= 0)
 		{
-			buffer.append(" WHERE "
+			buffer.append(" WHERE publish=true AND "
 								+ "p.sub_two_fk_id = "+subid
 								+ " AND p.price = "+ start_price +" "
 								+ "ORDER BY p.product_pk_id DESC "
@@ -521,7 +519,7 @@ public class ProductSqlBuilder {
 		}
 		else if(subid > 0 && start_price >= 0 & price > 0 && sourceid > 0 && title.equals("null") && mainid <= 0)
 		{
-			buffer.append(" WHERE "
+			buffer.append(" WHERE publish=true AND "
 								+ "p.sub_two_fk_id = "+subid
 								+ " AND "
 								+ " s.source_pk_id = "+sourceid
@@ -534,7 +532,7 @@ public class ProductSqlBuilder {
 		}	
 		else if(subid > 0 && start_price >= 0 & price > 0 && sourceid <= 0 && title.equals("null") && mainid <= 0)
 		{
-			buffer.append(" WHERE "
+			buffer.append(" WHERE publish=true AND "
 								+ "p.sub_two_fk_id = "+subid
 								+ " AND p.price BETWEEN "+ start_price +" "
 								+ "AND "+ price +""
@@ -545,7 +543,7 @@ public class ProductSqlBuilder {
 		}	
 		else if(sourceid > 0 && subid > 0 && start_price <= 0 && price <= 0 && title.equals("null") && mainid <= 0)
 		{
-			buffer.append(" WHERE "
+			buffer.append(" WHERE publish=true AND "
 							+ " p.sub_two_fk_id = "+subid
 							+ " AND "
 							+ "s.source_pk_id = "+sourceid								
@@ -560,7 +558,7 @@ public class ProductSqlBuilder {
 		}
 		else if(subid > 0 && sourceid <= 0 && start_price <= 0 && price <= 0 && title.equals("null") && mainid <= 0)
 		{
-			buffer.append(" WHERE "
+			buffer.append(" WHERE publish=true AND "
 					+ " p.sub_two_fk_id = "+subid							
 					+" ORDER BY p.product_pk_id DESC "
 				
@@ -570,9 +568,10 @@ public class ProductSqlBuilder {
 					+"	OFFSET "
 					+"		#{pagin.offset}");
 			return buffer.toString();
+		}else{
+			buffer.append(" WHERE publish=true");
 		}
-		
-		return null;
+		return buffer.toString();
 	}
 	
 	/**
@@ -614,19 +613,19 @@ public class ProductSqlBuilder {
 		buffer.append(select);
 		if(mainid > 0 && title.equals("null") && price <= 0 && start_price <= 0 && sourceid <= 0 && subid >= 0)
 		{
-			buffer.append("WHERE m.category_pk_id = "
+			buffer.append("WHERE publish=true AND m.category_pk_id = "
 					+ mainid);
 			return buffer.toString();
 		}
 		else if(!title.equals("null") && mainid <= 0 && price <= 0 && start_price <= 0 && sourceid <= 0 && subid >= 0)
 		{
-			buffer.append("WHERE LOWER(p.title) LIKE LOWER('%"+ title +"%')");
+			buffer.append("WHERE publish=true AND LOWER(p.title) LIKE LOWER('%"+ title +"%')");
 			return buffer.toString();
 		}
 		
 		else if(!title.equals("null") && mainid > 0 && price <= 0 && start_price <= 0 && sourceid <= 0 && subid >= 0)
 		{
-			buffer.append("WHERE m.category_pk_id = "
+			buffer.append("WHERE publish=true AND m.category_pk_id = "
 					+ mainid
 					+" AND "
 					+ " LOWER(p.title) LIKE LOWER('%"+ title +"%') ");
@@ -637,7 +636,7 @@ public class ProductSqlBuilder {
 		//**
 		else if(!title.equals("null") && sourceid > 0 && price <= 0 && start_price <= 0 &&  mainid <= 0 && subid >= 0)
 		{
-			buffer.append("WHERE s.source_pk_id = "
+			buffer.append("WHERE publish=true AND s.source_pk_id = "
 					+ sourceid
 					+" AND "
 					+ " LOWER(p.title) LIKE LOWER('%"+ title +"%') ");
@@ -646,7 +645,7 @@ public class ProductSqlBuilder {
 		
 		else if(!title.equals("null") && price > 0 && start_price >= 0 && mainid <= 0 && sourceid <= 0 && subid >= 0)
 		{
-			buffer.append("WHERE "
+			buffer.append("WHERE publish=true AND "
 					+" LOWER(p.title) LIKE LOWER('%"+ title +"%') "
 					+" AND "
 					+" p.price BETWEEN "+ start_price +" "
@@ -656,7 +655,7 @@ public class ProductSqlBuilder {
 		
 		else if(!title.equals("null") && sourceid > 0 && mainid > 0 && price <= 0 && start_price <= 0 && subid >= 0)
 		{
-			buffer.append("WHERE m.category_pk_id = "+ mainid
+			buffer.append("WHERE publish=true AND m.category_pk_id = "+ mainid
 					+ " AND "
 					+ " s.source_pk_id = "+ sourceid
 					+" AND "
@@ -666,7 +665,7 @@ public class ProductSqlBuilder {
 		
 		else if(!title.equals("null") && price > 0 && start_price >= 0 && mainid > 0 && sourceid <= 0 && subid >= 0)
 		{
-			buffer.append("WHERE m.category_pk_id = "+ mainid
+			buffer.append("WHERE publish=true AND m.category_pk_id = "+ mainid
 					+" AND "
 					+" LOWER(p.title) LIKE LOWER('%"+ title +"%') "
 					+" AND "
@@ -676,7 +675,7 @@ public class ProductSqlBuilder {
 		}
 		else if(!title.equals("null") && price > 0 && start_price >= 0 && sourceid > 0 && mainid <= 0 && subid >= 0)
 		{
-			buffer.append("WHERE s.source_pk_id = "+ sourceid
+			buffer.append("WHERE publish=true AND s.source_pk_id = "+ sourceid
 					+" AND "
 					+" LOWER(p.title) LIKE LOWER('%"+ title +"%') "
 					+" AND "
@@ -688,14 +687,14 @@ public class ProductSqlBuilder {
 		
 		else if(subid > 0 && start_price > 0 && price <= 0 && sourceid <= 0 && title.equals("null") && mainid <= 0)
 		{
-			buffer.append(" WHERE "
+			buffer.append(" WHERE publish=true AND "
 								+ "p.sub_two_fk_id = "+subid
 								+ " AND p.price = "+ start_price);
 			return buffer.toString();
 		}
 		else if(subid > 0 && start_price >= 0 & price > 0 && sourceid > 0 && title.equals("null") && mainid <= 0)
 		{
-			buffer.append(" WHERE "
+			buffer.append(" WHERE publish=true AND "
 								+ "p.sub_two_fk_id = "+subid
 								+ " AND "
 								+ " s.source_pk_id = "+sourceid
@@ -705,7 +704,7 @@ public class ProductSqlBuilder {
 		}	
 		else if(subid > 0 && start_price >= 0 & price > 0 && sourceid <= 0 && title.equals("null") && mainid <= 0)
 		{
-			buffer.append(" WHERE "
+			buffer.append(" WHERE publish=true AND "
 								+ "p.sub_two_fk_id = "+subid
 								+ " AND p.price BETWEEN "+ start_price +" "
 								+ "AND "+ price);
@@ -713,7 +712,7 @@ public class ProductSqlBuilder {
 		}	
 		else if(sourceid > 0 && subid > 0 && start_price <= 0 && price <= 0 && title.equals("null") && mainid <= 0)
 		{
-			buffer.append(" WHERE "
+			buffer.append(" WHERE publish=true AND "
 							+ " p.sub_two_fk_id = "+subid
 							+ " AND "
 							+ "s.source_pk_id = "+sourceid);
@@ -721,9 +720,11 @@ public class ProductSqlBuilder {
 		}
 		else if(subid > 0 && sourceid <= 0 && start_price <= 0 && price <= 0 && title.equals("null") && mainid <= 0)
 		{
-			buffer.append(" WHERE "
+			buffer.append(" WHERE publish=true AND "
 					+ " p.sub_two_fk_id = "+subid);
 			return buffer.toString();
+		}else{
+			buffer.append(" WHERE publish=true");
 		}
 		return buffer.toString();
 	}
@@ -771,7 +772,7 @@ public class ProductSqlBuilder {
 						}
 			
 			if(subcategoryid <= 0 ){
-				buffer.append(" WHERE s.source_pk_id = #{sourceid}"								
+				buffer.append(" WHERE publish=true AND s.source_pk_id = #{sourceid}"								
 								+" ORDER BY p.product_pk_id DESC "
 							
 								+"	LIMIT "
@@ -780,7 +781,7 @@ public class ProductSqlBuilder {
 								+"	OFFSET "
 								+"		#{pagin.offset}");
 			}else{
-				buffer.append(" WHERE s.source_pk_id = #{sourceid}"
+				buffer.append(" WHERE publish=true AND s.source_pk_id = #{sourceid}"
 						+" AND "
 						+" sc.sub_two_fk_id = #{subcategoryid}"
 						
@@ -825,7 +826,7 @@ public class ProductSqlBuilder {
 						+"		phsar_source s "
 						+" ON "
 						+"		sc.source_fk_id = s.source_pk_id "
-						+" WHERE "
+						+" WHERE publish=true AND "
 						+ "s.source_pk_id = #{sourceid} "
 						+ " AND "
 						+" sc.sub_two_fk_id = #{subcategoryid}";
@@ -859,7 +860,7 @@ public class ProductSqlBuilder {
 						+"		phsar_source s "
 						+" ON "
 						+"		sc.source_fk_id = s.source_pk_id "
-						+" WHERE "
+						+" WHERE publish=true AND "
 						+"		p.date_create = '"+current_date+"'"
 						+" ORDER BY p.product_pk_id DESC ";
 		return select;

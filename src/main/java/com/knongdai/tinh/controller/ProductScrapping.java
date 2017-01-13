@@ -32,7 +32,7 @@ public class ProductScrapping {
 	/**
 	 * Scrap data auto by set fixed delay
 	 */
-	//@Scheduled(fixedDelay = 30*60000)
+	@Scheduled(fixedDelay = 30*60000)
 	private void scrap(){
 		System.out.println("Autoscrap...");
 		
@@ -75,8 +75,8 @@ public class ProductScrapping {
 							images=matcher.group(1);
 					    }
 						p.setUrl(url);
-						p.setImage(image);
-						p.setImages(images);
+						p.setImage(s.getSource().getPrefiximage() +image);
+						p.setImages(s.getSource().getPrefiximage() + images);
 						p.setTitle(title);
 						p.setPrice(Double.parseDouble(getPrice));
 						p.setDescription(description);
@@ -85,9 +85,6 @@ public class ProductScrapping {
 						s2.setSubtwocategoryid(s.getSubCategory().getSubtwocategoryid());
 						p.setSubTwoCategory(s2);
 						productstmp.add(p);
-						
-						System.out.println(">" + s.getSource().getPrefiximage() + p.getImage());
-						System.out.println(">lst" + s.getSource().getPrefiximage() + p.getImages());
 						
 						pts.saveProductTmp(productstmp);	
 					}

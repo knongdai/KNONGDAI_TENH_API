@@ -26,7 +26,7 @@ public class ProductTempProvider {
 			INNER_JOIN("phsar_source_category sc ON p.source_category_fk_id = sc.source_category_pk_id");
 			
 			if(filter.getTitle()!=null)
-				WHERE("p.title = #{filter.title}");
+				WHERE("LOWER(p.title) LIKE '%' || LOWER(#{filter.title}) || '%' ");
 			
 			if(filter.getCategoryId()!=null)
 				WHERE("p.sub_two_fk_id = #{filter.categoryId}");
@@ -43,7 +43,7 @@ public class ProductTempProvider {
 			SELECT("COUNT(*)");
 			FROM("phsar_product");
 			if(filter.getTitle()!=null)
-				WHERE("title = #{title}");
+				WHERE("LOWER(title) LIKE '%' || LOWER(#{title}) || '%' ");
 			
 			if(filter.getCategoryId()!=null)
 				WHERE("sub_two_fk_id = #{categoryId}");
