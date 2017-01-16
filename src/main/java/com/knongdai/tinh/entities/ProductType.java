@@ -17,7 +17,10 @@ public class ProductType {
 	
 	@JsonProperty("TAGS")
 	private ArrayList<String> tags;
-
+	
+	@JsonProperty("TAG")
+	private String tag;
+	
 	public long getProductid() {
 		return productid;
 	}
@@ -50,10 +53,18 @@ public class ProductType {
 		this.tags = tags;
 	}
 
+	public String getTag() {
+		return tag;
+	}
+
+	public void setTag(String tag) {
+		this.tag = tag;
+	}
+
 	@Override
 	public String toString() {
 		return "ProductType [productid=" + productid + ", subTwoCategory=" + subTwoCategory + ", productType="
-				+ productType + ", tags=" + tags + "]";
+				+ productType + ", tags=" + tags + ", tag=" + tag + "]";
 	}
 
 }

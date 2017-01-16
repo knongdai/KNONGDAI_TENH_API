@@ -1,14 +1,19 @@
 package com.knongdai.tinh.repositories;
 
 import java.util.ArrayList;
-import java.util.Properties;
-import org.apache.ibatis.annotations.Results;
+import java.util.List;
+
+import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Result;
+import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
-import org.springframework.beans.factory.annotation.Value;
+import org.apache.ibatis.annotations.SelectProvider;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 
 import com.knongdai.tinh.entities.ProductType;
+import com.knongdai.tinh.repositories.sqlbuilder.ProductTypeProvider;
 
 @Repository
 public interface ProductTypeRepository {
@@ -30,4 +35,21 @@ public interface ProductTypeRepository {
 	})
 	@Select(select_all)
 	public ArrayList<ProductType> getAll();	
+	
+	
+	@Insert("INSERT INTO phsar_product_type(product_type, tags) VALUES(#{productType}, #{tag})")
+	public boolean save(ProductType productType);
+	
+	@Delete("DELETE FROM phsar_product_type WHERE product_type_pk_id = #{id}")
+	public boolean remove(int id);
+	
+	@Update("UPDATE phsar_product_type SET product_type = #{productType}, tags = #{tag} WHERE product_type_pk_id = #{productid}")
+	public boolean update(ProductType productType);
+	
+	@Select("SELECT product_type_pk_id AS \"productid\", product_type AS \"productType\", tags AS \"tag\" FROM phsar_product_type WHERE product_type_pk_id=#{id}")
+	public ProductType findOne(int id);
+	
+	@SelectProvider(method="findAll", type=ProductTypeProvider.class)
+	public List<ProductType> findAll(String type);
+	
 }
