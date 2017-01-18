@@ -1,7 +1,13 @@
 package com.phearun.utility;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Response {
+	
+	@JsonProperty("CODE")
 	private String code;
+	
+	@JsonProperty("MESSAGE")
 	private String message;
 	
 	public Response() {}

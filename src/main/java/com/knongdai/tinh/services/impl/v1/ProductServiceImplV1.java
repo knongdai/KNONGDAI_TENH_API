@@ -6,10 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.knongdai.tinh.entities.Product;
+import com.knongdai.tinh.entities.util.Pagination;
 import com.knongdai.tinh.entities.v1.ProductFilter;
 import com.knongdai.tinh.repositories.v1.ProductRepositoryV1;
 import com.knongdai.tinh.services.v1.ProductServiceV1;
-import com.phearun.utility.Paging;
 
 @Service
 public class ProductServiceImplV1 implements ProductServiceV1{
@@ -18,7 +18,7 @@ public class ProductServiceImplV1 implements ProductServiceV1{
 	private ProductRepositoryV1 productRepository;
 	
 	@Override
-	public List<Product> findAll(ProductFilter filter, Paging paging) {
+	public List<Product> findAll(ProductFilter filter, Pagination paging) {
 		paging.setTotalCount(productRepository.countAll(filter));
 		return productRepository.findAll(filter, paging);
 	}

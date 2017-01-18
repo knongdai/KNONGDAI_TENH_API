@@ -2,13 +2,20 @@ package com.phearun.utility;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.knongdai.tinh.entities.util.Pagination;
+
 public class ResponseList<T> extends Response {
+	
+	@JsonProperty("DATA")
 	private List<T> data;	
-	private Paging pagination;
+	
+	@JsonProperty("PAGING")
+	private Pagination pagination;
 
 	public ResponseList() {}
 	
-	public ResponseList(List<T> data, Paging pagination) {
+	public ResponseList(List<T> data, Pagination pagination) {
 		this.setData(data);
 		this.setPagination(pagination);
 	}
@@ -23,10 +30,10 @@ public class ResponseList<T> extends Response {
 		else
 			super.setCode(HttpCode.RECORD_FOUND);
 	}
-	public Paging getPagination() {
+	public Pagination getPagination() {
 		return pagination;
 	}
-	public void setPagination(Paging pagination) {
+	public void setPagination(Pagination pagination) {
 		this.pagination = pagination;
 	}
 	

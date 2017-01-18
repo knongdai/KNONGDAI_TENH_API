@@ -2,7 +2,11 @@ package com.phearun.utility;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class ResponseList2<T> extends Response {
+
+	@JsonProperty("DATA")
 	private List<T> data;	
 
 	public ResponseList2() {}

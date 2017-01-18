@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.knongdai.tinh.entities.Product;
+import com.knongdai.tinh.entities.util.Pagination;
 import com.knongdai.tinh.entities.v1.ProductFilter;
 import com.knongdai.tinh.services.v1.ProductServiceV1;
 import com.mangofactory.swagger.annotations.ApiIgnore;
-import com.phearun.utility.Paging;
 import com.phearun.utility.ResponseList;
 import com.wordnik.swagger.annotations.ApiImplicitParam;
 import com.wordnik.swagger.annotations.ApiImplicitParams;
@@ -38,7 +38,7 @@ public class ProductController {
 	})
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseList<Product> findAll(@ApiIgnore ProductFilter filter, @ApiIgnore Paging paging){
+	public ResponseList<Product> findAll(@ApiIgnore ProductFilter filter, @ApiIgnore Pagination paging){
 		System.out.println("=>" + filter);
 		List<Product> products = productService.findAll(filter, paging);
 		return new ResponseList<>(products, paging);

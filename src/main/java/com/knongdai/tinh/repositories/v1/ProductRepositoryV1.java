@@ -9,9 +9,9 @@ import org.apache.ibatis.annotations.SelectProvider;
 import org.springframework.stereotype.Repository;
 
 import com.knongdai.tinh.entities.Product;
+import com.knongdai.tinh.entities.util.Pagination;
 import com.knongdai.tinh.entities.v1.ProductFilter;
 import com.knongdai.tinh.repositories.v1.provider.ProductProviderV1;
-import com.phearun.utility.Paging;
 
 @Repository
 public interface ProductRepositoryV1 {
@@ -23,7 +23,7 @@ public interface ProductRepositoryV1 {
 			@Result(property="sourceCategory.source.logo", column="sourceLogo"),
 			@Result(property="sourceCategory.source.domain", column="sourceDomain")
 	})
-	List<Product> findAll(@Param("filter") ProductFilter filter, @Param("paging") Paging paging);
+	List<Product> findAll(@Param("filter") ProductFilter filter, @Param("paging") Pagination paging);
 	
 	@SelectProvider(method = "countAll", type = ProductProviderV1.class)
 	long countAll(ProductFilter filter);
