@@ -25,8 +25,8 @@ public class ProductController {
 	
 	
 	@ApiImplicitParams({
-		@ApiImplicitParam(name = "title", required = false, dataType = "int", paramType = "query", value="Filter by title"),
-		@ApiImplicitParam(name = "keyword", required = false, dataType = "int", paramType = "query", value="Filter by tag"),
+		@ApiImplicitParam(name = "title", required = false, dataType = "string", paramType = "query", value="Filter by title"),
+		@ApiImplicitParam(name = "keyword", required = false, dataType = "string", paramType = "query", value="Filter by tag"),
         @ApiImplicitParam(name = "categoryId", required = false, dataType = "int", paramType = "query",value="Filter by category id"),
         @ApiImplicitParam(name = "websiteId", required = false, dataType = "int", paramType = "query", value="Filter by website id"),
         @ApiImplicitParam(name = "userId", required = false, dataType = "int", paramType = "query", value="Filter by user id"),

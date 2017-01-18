@@ -1,5 +1,6 @@
 package com.knongdai.tinh.services.impl.v1;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,20 @@ public class ProductServiceImplV1 implements ProductServiceV1{
 	public List<Product> findAll(ProductFilter filter, Pagination paging) {
 		paging.setTotalCount(productRepository.countAll(filter));
 		return productRepository.findAll(filter, paging);
+	}
+
+	@Override
+	public List<String> findKeywords(String keyword) {
+		List<String> keywords = new ArrayList<>();
+		
+		for(String key: productRepository.findKeywords(keyword)){
+			for(String kw: key.split(",")){
+				keywords.add(kw.trim());
+			}
+		}
+		System.out.println(keywords);
+		
+		return keywords;
 	}
 
 }

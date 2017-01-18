@@ -5,7 +5,16 @@ import org.apache.ibatis.jdbc.SQL;
 import com.knongdai.tinh.entities.v1.ProductFilter;
 
 public class ProductProviderV1 {
-			
+
+	public String findKeywords(){
+		return new SQL(){{
+			SELECT_DISTINCT("tags");
+			FROM("phsar_product_type PT");
+			INNER_JOIN("phsar_product P ON PT .product_type_pk_id = P .product_type_fk_id");
+			WHERE("LOWER (PT.tags) LIKE '%' || LOWER (#{keyword}) || '%'");
+		}}.toString();
+	}
+	
 	public String findAll(ProductFilter filter){
 		return new SQL(){{
 			

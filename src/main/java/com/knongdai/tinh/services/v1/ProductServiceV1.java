@@ -10,4 +10,5 @@ public interface ProductServiceV1 {
 
 	List<Product> findAll(ProductFilter filter, Pagination paging);
 	
+	List<String> findKeywords(String keyword);
 }

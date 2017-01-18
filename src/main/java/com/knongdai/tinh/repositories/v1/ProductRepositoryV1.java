@@ -27,4 +27,7 @@ public interface ProductRepositoryV1 {
 	
 	@SelectProvider(method = "countAll", type = ProductProviderV1.class)
 	long countAll(ProductFilter filter);
+	
+	@SelectProvider(method = "findKeywords", type = ProductProviderV1.class)
+	List<String> findKeywords(String keyword);
 }
