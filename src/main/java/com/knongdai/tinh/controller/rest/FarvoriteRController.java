@@ -33,8 +33,8 @@ public class FarvoriteRController {
 	@RequestMapping(method = RequestMethod.GET, path = "/farvorite", headers = "Accept=application/json")
 	public ResponseEntity<Map<String, Object>> getFarvoriteByUserId(
 				@RequestParam(required=true, defaultValue="0", name="usreid") int userid,
-				@RequestParam(required=true, defaultValue="0", name="page") int page,
-				@RequestParam(required=true, defaultValue="0", name="limit") int limit
+				@RequestParam(required=true, defaultValue="1", name="page") int page,
+				@RequestParam(required=true, defaultValue="10", name="limit") int limit
 			) {
 		pagin.setPage(page);
 		pagin.setLimit(limit);

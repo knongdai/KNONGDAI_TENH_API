@@ -1,7 +1,8 @@
 package com.knongdai.tinh.services.impl.v1;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,9 +26,8 @@ public class ProductServiceImplV1 implements ProductServiceV1{
 	}
 
 	@Override
-	public List<String> findKeywords(String keyword) {
-		List<String> keywords = new ArrayList<>();
-		
+	public Set<String> findKeywords(String keyword) {
+		Set<String> keywords = new HashSet<>();
 		for(String key: productRepository.findKeywords(keyword)){
 			for(String kw: key.split(",")){
 				keywords.add(kw.trim());

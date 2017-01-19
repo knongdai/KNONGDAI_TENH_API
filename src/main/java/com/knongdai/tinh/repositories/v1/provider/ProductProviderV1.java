@@ -41,7 +41,7 @@ public class ProductProviderV1 {
 				WHERE("p.sub_two_fk_id = #{filter.categoryId}");
 			}
 			if(filter.getWebsiteId() != null){
-				WHERE("p.source_category_fk_id = #{filter.websiteId}");
+				WHERE("sc.source_fk_id = #{filter.websiteId}");
 			}
 			if(filter.getTitle() != null){
 				WHERE("LOWER(p.title) LIKE '%' || LOWER(#{filter.title}) || '%'");

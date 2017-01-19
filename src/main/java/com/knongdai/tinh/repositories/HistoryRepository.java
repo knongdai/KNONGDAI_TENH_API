@@ -22,6 +22,8 @@ public interface HistoryRepository {
 							+ "		p.title, "
 							+ "		p.price, "
 							+ "		p.image, "
+							+ "		p.description, "
+							+ "		p.images, "
 							+ "		p.url, "
 							+ "		h.history_pk_id, "
 							+ "		h.date_create, "
@@ -58,7 +60,9 @@ public interface HistoryRepository {
 			@Result(property="product.productid", column="product_pk_id"),
 			@Result(property="product.title", column="title"),
 			@Result(property="product.price", column="price"),
-			@Result(property="product.images", column="image"),
+			@Result(property="product.image", column="image"),
+			@Result(property="product.images", column="images"),
+			@Result(property="product.description", column="description"),
 			@Result(property="product.url", column="url"),
 			@Result(property="product.sourceCategory.source.logo", column="logo"),
 			@Result(property="product.sourceCategory.source.domain", column="domain")

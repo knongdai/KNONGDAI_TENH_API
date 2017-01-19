@@ -34,8 +34,10 @@ public interface FarvoriteRepository {
 							+ "u.user_pk_id, "
 							+ "p.product_pk_id,"
 							+ "p.title, "
+							+ "p.description, "
 							+ "p.price, "
 							+ "p.image, "
+							+ "p.images, "
 							+ "p.url, "
 							+ "f.farvorite_pk_id, "
 							+ "f.date_create ,"
@@ -102,7 +104,9 @@ public interface FarvoriteRepository {
 			@Result(property="product.productid", column="product_pk_id"),
 			@Result(property="product.title", column="title"),
 			@Result(property="product.price", column="price"),
-			@Result(property="product.images", column="image"),
+			@Result(property="product.description", column="description"),
+			@Result(property="product.images", column="images"),
+			@Result(property="product.image", column="image"),
 			@Result(property="product.url", column="url"),
 			@Result(property="product.sourceCategory.source.logo", column="logo"),
 			@Result(property="product.sourceCategory.source.domain", column="domain")

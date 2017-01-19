@@ -22,7 +22,7 @@ public class Product {
 	@JsonProperty("IMAGES")
 	private ArrayList<String> lstImg;
 	
-	@JsonProperty("ADD_IMAGE")
+	@JsonIgnore
 	private String image;
 	
 	@JsonProperty("IMAGE")
