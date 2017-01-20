@@ -1,6 +1,6 @@
 package com.knongdai.tinh.controller.v1;
 
-import java.util.Set;
+import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.knongdai.tinh.services.v1.ProductServiceV1;
-import com.phearun.utility.ResponseSet2;
+import com.phearun.utility.ResponseCollection;
 
 @RestController
 @RequestMapping("/api/v1/tenh/keywords")
@@ -19,9 +19,9 @@ public class SearchSuggestionController {
 	private ProductServiceV1 productService;
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseSet2<String> findKeywords(@RequestParam("keyword") String keyword){
-		Set<String> keywords = productService.findKeywords(keyword);
-		return new ResponseSet2<>(keywords);
+	public ResponseCollection<String> findKeywords(@RequestParam("keyword") String keyword){
+		Collection<String> keywords = productService.findKeywords(keyword);
+		return new ResponseCollection<>(keywords);
 	}
 	
 }

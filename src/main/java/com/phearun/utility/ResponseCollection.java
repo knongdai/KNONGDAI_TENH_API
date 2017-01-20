@@ -1,24 +1,25 @@
 package com.phearun.utility;
 
-import java.util.Set;
+import java.util.Collection;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class ResponseSet2<T> extends Response {
+public class ResponseCollection<T> extends Response {
 
 	@JsonProperty("DATA")
-	private Set<T> data;	
+	private Collection<T> data;	
 
-	public ResponseSet2() {}
+	public ResponseCollection() {}
 	
-	public ResponseSet2(Set<T> data) {
+	public ResponseCollection(Collection<T> data) {
 		this.setData(data);
 	}
 	
-	public Set<T> getData() {
+	public Collection<T> getData() {
 		return data;
 	}
-	public void setData(Set<T> data) {
+	
+	public void setData(Collection<T> data) {
 		this.data = data;
 		if(data.isEmpty())
 			super.setCode(HttpCode.RECORD_NOT_FOUND);
@@ -28,6 +29,6 @@ public class ResponseSet2<T> extends Response {
 
 	@Override
 	public String toString() {
-		return "ResponseList2 [data=" + data + "]";
+		return "ResponseCollection [data=" + data + "]";
 	}
 }

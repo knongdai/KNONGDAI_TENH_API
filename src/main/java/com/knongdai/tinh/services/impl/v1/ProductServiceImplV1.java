@@ -1,5 +1,6 @@
 package com.knongdai.tinh.services.impl.v1;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -26,7 +27,7 @@ public class ProductServiceImplV1 implements ProductServiceV1{
 	}
 
 	@Override
-	public Set<String> findKeywords(String keyword) {
+	public Collection<String> findKeywords(String keyword) {
 		Set<String> keywords = new HashSet<>();
 		for(String key: productRepository.findKeywords(keyword)){
 			for(String kw: key.split(",")){
