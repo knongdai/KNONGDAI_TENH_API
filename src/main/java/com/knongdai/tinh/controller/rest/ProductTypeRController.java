@@ -19,8 +19,8 @@ import com.knongdai.tinh.controller.rest.message.ResponseMessage;
 import com.knongdai.tinh.entities.ProductType;
 import com.knongdai.tinh.services.ProductTypeService;
 import com.phearun.utility.Response;
-import com.phearun.utility.ResponseList2;
-import com.phearun.utility.ResponseRecord;
+import com.phearun.utility.ResponseCollection;
+import com.phearun.utility.ResponseObject;
 
 @RestController
 @CrossOrigin
@@ -48,9 +48,9 @@ public class ProductTypeRController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseList2<ProductType> findAll(@RequestParam(value="type", required=false) String type){
+	public ResponseCollection<ProductType> findAll(@RequestParam(value="type", required=false) String type){
 		List<ProductType> data = pts.findAll(type);
-		return new ResponseList2<>(data);
+		return new ResponseCollection<>(data);
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
@@ -73,9 +73,9 @@ public class ProductTypeRController {
 	
 
 	@RequestMapping(value="/{id}", method = RequestMethod.GET)
-	public ResponseRecord<ProductType> findOne(@PathVariable("id") int id){
+	public ResponseObject<ProductType> findOne(@PathVariable("id") int id){
 		ProductType data = pts.findOne(id);
-		return new ResponseRecord<ProductType>(data);
+		return new ResponseObject<ProductType>(data);
 	}
 	
 	

@@ -12,7 +12,7 @@ import com.knongdai.tinh.entities.util.Pagination;
 import com.knongdai.tinh.entities.v1.ProductFilter;
 import com.knongdai.tinh.services.v1.ProductServiceV1;
 import com.mangofactory.swagger.annotations.ApiIgnore;
-import com.phearun.utility.ResponseList;
+import com.phearun.utility.ResponseCollectionPaging;
 import com.wordnik.swagger.annotations.ApiImplicitParam;
 import com.wordnik.swagger.annotations.ApiImplicitParams;
 
@@ -38,10 +38,10 @@ public class ProductController {
 	})
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseList<Product> findAll(@ApiIgnore ProductFilter filter, @ApiIgnore Pagination paging){
+	public ResponseCollectionPaging<Product> findAll(@ApiIgnore ProductFilter filter, @ApiIgnore Pagination paging){
 		System.out.println("=>" + filter);
 		List<Product> products = productService.findAll(filter, paging);
-		return new ResponseList<>(products, paging);
+		return new ResponseCollectionPaging<>(products, paging);
 	}
 	
 }

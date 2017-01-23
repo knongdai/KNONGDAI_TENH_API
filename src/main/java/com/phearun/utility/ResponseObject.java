@@ -1,45 +1,30 @@
 package com.phearun.utility;
 
-import java.util.List;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.knongdai.tinh.entities.util.Pagination;
-
 public class ResponseObject<T> extends Response {
 	
-	@JsonProperty("DATA")
-	private List<T> data;	
-	
-	@JsonProperty("PAGING")
-	private Pagination pagination;
+	private T data;
 
 	public ResponseObject() {}
 	
-	public ResponseObject(List<T> data, Pagination pagination) {
+	public ResponseObject(T data) {
 		this.setData(data);
-		this.setPagination(pagination);
 	}
 	
-	public List<T> getData() {
+	public T getData() {
 		return data;
 	}
-	public void setData(List<T> data) {
+	
+	public void setData(T data) {
 		this.data = data;
-		if(data.isEmpty())
+		if(data == null)
 			super.setCode(HttpCode.RECORD_NOT_FOUND);
 		else
 			super.setCode(HttpCode.RECORD_FOUND);
 	}
-	public Pagination getPagination() {
-		return pagination;
-	}
-	public void setPagination(Pagination pagination) {
-		this.pagination = pagination;
-	}
 	
 	@Override
 	public String toString() {
-		return "ResponseList [data=" + data + ", pagination=" + pagination + "]";
+		return "ResponseObject [data=" + data + "]";
 	}
 
 }

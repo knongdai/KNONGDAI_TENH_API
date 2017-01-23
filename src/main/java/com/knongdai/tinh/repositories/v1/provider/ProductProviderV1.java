@@ -31,31 +31,31 @@ public class ProductProviderV1 {
 			INNER_JOIN("phsar_source_category sc ON p.source_category_fk_id = sc.source_category_pk_id");
 			INNER_JOIN("phsar_source s ON s.source_pk_id = sc.source_fk_id");
 			
-			if(filter.getKeyword() != null){
+			if(filter.getKeyword() != null && filter.getKeyword() != ""){
 				INNER_JOIN("phsar_product_type pt ON pt.product_type_pk_id = p.product_type_fk_id");
 			}
-			if (filter.getUserId() != null) {
+			if (filter.getUserId() != null && filter.getUserId() != 0) {
 				LEFT_OUTER_JOIN("phsar_farvorite F ON p.product_pk_id = F.product_fk_id AND F.user_fk_id =#{filter.userId}");
 			}
-			if(filter.getCategoryId() != null){
+			if(filter.getCategoryId() != null && filter.getCategoryId() != 0){
 				WHERE("p.sub_two_fk_id = #{filter.categoryId}");
 			}
-			if(filter.getWebsiteId() != null){
+			if(filter.getWebsiteId() != null && filter.getWebsiteId() != 0){
 				WHERE("sc.source_fk_id = #{filter.websiteId}");
 			}
-			if(filter.getTitle() != null){
+			if(filter.getTitle() != null && filter.getTitle() != ""){
 				WHERE("LOWER(p.title) LIKE '%' || LOWER(#{filter.title}) || '%'");
 			}
-			if(filter.getProductTypeId() != null){
+			if(filter.getProductTypeId() != null && filter.getProductTypeId() != 0){
 				WHERE("p.product_type_fk_id = #{filter.productTypeId}");
 			}
-			if(filter.getKeyword() != null){
+			if(filter.getKeyword() != null && filter.getKeyword() != ""){
 				WHERE("LOWER(pt.tags) LIKE '%' || LOWER(#{filter.keyword}) || '%'");
 			}
-			if (filter.getMinPrice() != null) {
+			if (filter.getMinPrice() != null && filter.getMinPrice() != 0.0) {
 				WHERE("p.price >= #{filter.minPrice}");
 			}
-			if (filter.getMaxPrice() != null) {
+			if (filter.getMaxPrice() != null && filter.getMaxPrice() != 0.0) {
 				WHERE("p.price <= #{filter.maxPrice}");
 			}
 			
@@ -70,38 +70,33 @@ public class ProductProviderV1 {
 		return new SQL(){{
 			
 			SELECT("COUNT(*)");
-			
 			FROM("phsar_product p");
 			
-			//INNER_JOIN("phsar_sub_two_category s2 ON p.sub_two_fk_id = s2.sub_two_pk_id");
-			//INNER_JOIN("phsar_source_category sc ON p.source_category_fk_id = sc.source_category_pk_id");
-			//INNER_JOIN("phsar_source s ON s.source_pk_id = sc.source_fk_id");
-			
-			if(filter.getKeyword() != null){
+			if(filter.getKeyword() != null && filter.getKeyword() != ""){
 				INNER_JOIN("phsar_product_type pt ON pt.product_type_pk_id = p.product_type_fk_id");
 			}
-			if (filter.getUserId() != null) {
+			if (filter.getUserId() != null && filter.getUserId() != 0) {
 				LEFT_OUTER_JOIN("phsar_farvorite F ON p.product_pk_id = F.product_fk_id AND F.user_fk_id =#{userId}");
 			}
-			if(filter.getCategoryId() != null){
+			if(filter.getCategoryId() != null && filter.getCategoryId() != 0){
 				WHERE("p.sub_two_fk_id = #{categoryId}");
 			}
-			if(filter.getWebsiteId() != null){
+			if(filter.getWebsiteId() != null && filter.getWebsiteId() != 0){
 				WHERE("p.source_category_fk_id = #{websiteId}");
 			}
-			if(filter.getTitle() != null){
+			if(filter.getTitle() != null && filter.getTitle() != ""){
 				WHERE("LOWER(p.title) LIKE '%' || LOWER(#{title}) || '%'");
 			}
-			if(filter.getProductTypeId() != null){
+			if(filter.getProductTypeId() != null && filter.getProductTypeId() != 0){
 				WHERE("p.product_type_fk_id = #{productTypeId}");
 			}
-			if(filter.getKeyword() != null){
+			if(filter.getKeyword() != null && filter.getKeyword() != ""){
 				WHERE("LOWER(pt.tags) LIKE '%' || LOWER(#{keyword}) || '%'");
 			}
-			if (filter.getMinPrice() != null) {
+			if (filter.getMinPrice() != null && filter.getMinPrice() != 0.0) {
 				WHERE("p.price >= #{minPrice}");
 			}
-			if (filter.getMaxPrice() != null) {
+			if (filter.getMaxPrice() != null && filter.getMaxPrice() !=0.0) {
 				WHERE("p.price <= #{maxPrice}");
 			}
 			
